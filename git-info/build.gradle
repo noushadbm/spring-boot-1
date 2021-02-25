@@ -24,6 +24,7 @@ configurations {
 }
 
 def flogger_version = '0.5.1'
+def retrofit_version = '2.9.0'
 
 dependencies {
 	compile "com.google.flogger:flogger:${flogger_version}"
@@ -36,6 +37,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile 'org.springframework.boot:spring-boot-starter-validation'
 	compile 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	// Retrofit
+	compile group: 'com.squareup.retrofit2', name: 'retrofit', version: "${retrofit_version}"
+	compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: "${retrofit_version}"
 }
 
 test {

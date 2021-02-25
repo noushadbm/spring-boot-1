@@ -21,7 +21,7 @@ public class EnumValueValidator implements ConstraintValidator<ValidEnumValue, S
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        System.out.println("returning true for value:" + value);
+        if (null == value) return true;
 
         context.disableDefaultConstraintViolation();
 
