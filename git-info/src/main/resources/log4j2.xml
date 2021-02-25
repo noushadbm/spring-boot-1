@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <property name="LOGS_DIR" value="logs" />
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <JsonLayout  eventEol="true" complete="false" compact="true">
+                <KeyValuePair key="timestamp" value="$${date:yyyy-MM-dd'T'HH:mm:ss.SSS}" />
+                <KeyValuePair key="hostname" value="$${hostName}"/>
+                <KeyValuePair key="correlation-id" value="${ctx:correlation-id}"/>
+            </JsonLayout>
+        </Console>
+    </Appenders>
+    <DynamicThresholdFilter key="X-Log-Level" onMatch="ACCEPT" onMismatch="NEUTRAL" defaultThreshold="ERROR">
+        <KeyValuePair key="TRACE" value="TRACE"/>
+        <KeyValuePair key="DEBUG" value="DEBUG"/>
+        <KeyValuePair key="INFO" value="INFO"/>
+        <KeyValuePair key="ERROR" value="ERROR"/>
+        <KeyValuePair key="WARN" value="WARN"/>
+    </DynamicThresholdFilter>
+    <Loggers>
+        <Logger name="com.rayshan.gitinfo" level="info" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="ConsoleAppender" />
+        </Root>
+    </Loggers>
+</Configuration>
