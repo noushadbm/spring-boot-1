@@ -6,6 +6,7 @@ import com.rayshan.gitinfo.model.ListGitRepoRequest;
 import com.rayshan.gitinfo.model.ListGitRepoResponse;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ public class GitController {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ListGitRepoResponse> listGitRepos(
-            @PathVariable String user, @RequestBody ListGitRepoRequest request) {
+            @PathVariable String user, @Valid @RequestBody ListGitRepoRequest request) {
         System.out.println("got request for " + user);
         ListGitRepoResponse resp = new ListGitRepoResponse();
         List<String> repos = new ArrayList<>();
