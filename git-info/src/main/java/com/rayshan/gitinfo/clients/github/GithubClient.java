@@ -27,10 +27,12 @@ public class GithubClient {
             String user, ListGitRepoRequest req, Map<String, String> headers) {
         Call<List<RepoDetails>> gitHubCall;
 
-        String url = baseUrl + endpointPath;
+        // String url = baseUrl + endpointPath;
+        // logger.atInfo().log("Initiating call to url: %s", url);
+        // gitHubCall = githubApi.listRepos(url, headers);
 
-        logger.atInfo().log("Initiating call to url: %s", url);
-        gitHubCall = githubApi.listRepos(url, headers);
+        logger.atInfo().log("Initiating call to github");
+        gitHubCall = githubApi.listReposByName(user, headers);
         Response<List<RepoDetails>> response = null;
 
         try {
