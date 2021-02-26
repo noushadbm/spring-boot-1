@@ -3,6 +3,7 @@ package com.rayshan.gitinfo.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.google.common.flogger.FluentLogger;
+import com.rayshan.gitinfo.exception.GitInfoException;
 import com.rayshan.gitinfo.model.ListGitRepoRequest;
 import com.rayshan.gitinfo.model.ListGitRepoResponse;
 import com.rayshan.gitinfo.service.GitInfoService;
@@ -28,7 +29,8 @@ public class GitController {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ListGitRepoResponse> listGitRepos(
-            @PathVariable String user, @Valid @RequestBody ListGitRepoRequest request) {
+            @PathVariable String user, @Valid @RequestBody ListGitRepoRequest request)
+            throws GitInfoException {
         logger.atInfo().log("Received request for %s", user);
         ListGitRepoResponse resp = service.listGitRepos(user, request);
         return new ResponseEntity<>(resp, HttpStatus.OK);

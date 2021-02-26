@@ -2,6 +2,7 @@ package com.rayshan.gitinfo.service;
 
 import com.rayshan.gitinfo.clients.github.GithubClient;
 import com.rayshan.gitinfo.clients.github.model.RepoDetails;
+import com.rayshan.gitinfo.exception.GitInfoException;
 import com.rayshan.gitinfo.model.ListGitRepoRequest;
 import com.rayshan.gitinfo.model.ListGitRepoResponse;
 import com.rayshan.gitinfo.util.CommonUtil;
@@ -18,7 +19,8 @@ public class GitInfoService {
         this.githubClient = githubClient;
     }
 
-    public ListGitRepoResponse listGitRepos(String user, ListGitRepoRequest request) {
+    public ListGitRepoResponse listGitRepos(String user, ListGitRepoRequest request)
+            throws GitInfoException {
         List<RepoDetails> repoDetailsList = githubClient.listRepos(user, null, populateHeaders());
 
         ListGitRepoResponse resp =
