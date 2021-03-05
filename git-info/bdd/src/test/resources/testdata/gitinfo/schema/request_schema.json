@@ -1,0 +1,7 @@
+{
+  "base_path": "/v1/git-info/user/noushadbm/list",
+  "header": {
+    "Content-Type": "application/json",
+    "correlation-id": "cor-123"
+  }
+}

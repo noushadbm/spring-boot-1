@@ -1,0 +1,89 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url file('/home/gbase/libs')
+    }
+}
+
+dependencies {
+    // cucumber
+    //compile "io.cucumber:cucumber-java:${cucumber_version}"
+    //compile "io.cucumber:cucumber-junit:${cucumber_version}"
+    //compile "io.cucumber:cucumber-picocontainer:${cucumber_version}"
+
+    // rest assured
+    //compile "io.rest-assured:rest-assured:${rest_assured_version}"
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.10.4'
+    compile 'junit:junit:4.12'
+    compile 'io.cucumber:cucumber-java:4.7.2'
+    compile 'io.cucumber:cucumber-junit:4.7.2'
+    compile 'io.cucumber:cucumber-picocontainer:4.7.2'
+    compile 'log4j:log4j:1.2.17'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'org.yaml:snakeyaml:1.26'
+    testCompile 'org.yaml:snakeyaml:1.26'
+    compile 'io.rest-assured:rest-assured:4.0.0'
+    compile 'org.hamcrest:hamcrest:2.1'
+    compile 'com.jayway.jsonpath:json-path:2.4.0'
+    compile 'com.jayway.jsonpath:json-path-assert:2.4.0'
+    compile 'org.apache.commons:commons-lang3:3.9'
+    compile 'commons-io:commons-io:2.6'
+    compile 'com.google.cloud:google-cloud-spanner:1.49.2'
+    compile 'com.google.auth:google-auth-library-credentials:0.20.0'
+    compile 'org.xmlunit:xmlunit-core:2.6.3'
+    compile 'org.assertj:assertj-core:3.13.2'
+    compile 'org.xmlunit:xmlunit-assertj:2.6.3'
+    compile 'io.qameta.allure:allure-cucumber4-jvm:2.13.2'
+    compile 'org.slf4j:slf4j-api:1.7.30'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.0'
+    compile 'com.github.dzieciou.testing:curl-logger:1.0.3'
+}
+
+group = "com.rayshan.gitinfo.bdd"
+version = "0.0.1"
+sourceCompatibility = "1.8"
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava, processTestResources
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            systemProperty "env.type", System.getProperty("env.type")
+            def tags = System.getProperty("tags")
+            def threads = System.getProperty("threads")
+            if (threads==null){
+                threads = '1'
+            }
+            if (tags!=null){
+                args = ['--plugin', 'pretty', '--plugin' , 'json:target/cucumber.json' , '--tags', System.getProperty("tags"), '--glue', 'com.rayshan.gitinfo.bdd.stepdefs', 'src/test/resources/features','--threads', threads]
+            }else {
+                args = ['--plugin', 'pretty', '--plugin' , 'json:target/cucumber.json' , '--glue', 'com.rayshan.gitinfo.bdd.stepdefs', 'src/test/resources/features','--threads','10']
+            }
+        }
+    }
+}
