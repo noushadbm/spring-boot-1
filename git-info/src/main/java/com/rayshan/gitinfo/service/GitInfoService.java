@@ -21,7 +21,8 @@ public class GitInfoService {
 
     public ListGitRepoResponse listGitRepos(String user, ListGitRepoRequest request)
             throws GitInfoException {
-        List<RepoDetails> repoDetailsList = githubClient.listRepos(user, null, populateHeaders());
+        List<RepoDetails> repoDetailsList =
+                githubClient.listRepos(user, request, populateHeaders());
 
         ListGitRepoResponse resp =
                 new ListGitRepoResponse(CommonUtil.sortRepoDetailsList(repoDetailsList, request));
