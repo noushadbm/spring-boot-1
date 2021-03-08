@@ -41,6 +41,10 @@ dependencies {
 	// Retrofit
 	compile group: 'com.squareup.retrofit2', name: 'retrofit', version: "${retrofit_version}"
 	compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: "${retrofit_version}"
+
+	// swagger
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
 }
 
 test {
